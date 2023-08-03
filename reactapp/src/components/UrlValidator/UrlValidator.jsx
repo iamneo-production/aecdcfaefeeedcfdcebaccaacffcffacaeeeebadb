@@ -9,59 +9,46 @@ function UrlValidator() {
   const [message, setMessage] = useState('');          
   useEffect(() => {            
     if (domain && path && method) {              
-        let url = "";
-        
-                          // Validate domain and path ^w+\.[A-Za-z0-9]+\.com$
-                              if (!/^w+\.[A-Za-z0-9]+\.com$/i.test(domain)) {
-                                    setMessage('Invalid URL! Please recheck your URL');
-                                          return;
-                                              }
-                                                  
-                                                      const cleanedPath = path.trim().replace(' ', '/');
-                                                         
-                                                             // Validate body for POST and PUT methods
-                                                                 if (['POST', 'PUT'].includes(method)) {
-                                                                       if((body.trim().length === 0) || (body.trim().length > 0 && (!/^\{.*"[A-Za-z]+".*:.*"[A-Za-z]+".*\}$/i.test(body)))) {
-                                                                             setMessage('Error in the Body');
-                                                                                   return;
-                                                                                         }
-                                                                                             }
-                                                                                                 
-                                                                                                     if(['GET'].includes(method) && body.trim().length > 0) {
-                                                                                                           if(!/^\{.*"[A-Za-z]+".*:.*"[A-Za-z]+".*\}$/i.test(body)) {
-                                                                                                                 setMessage('Error in the Body of the Query Params');
-                                                                                                                       return;
-                                                                                                                             }
-                                                                                                                                 }
-
-                                                                                                                                     // Construct URL
-                                                                                                                                         
-                                                                                                                                             if(['GET'].includes(method) && body.trim().length > 0) {
-                                                                                                                                                   let te = body.trim().replace(/[\s\{\}\"]+/g,"");
-                                                                                                                                                         const tem = te.trim().replace(":","=");
-                                                                                                                                                               url = `${domain}/${cleanedPath}?${tem}`;
-                                                                                                                                                                   }
-                                                                                                                                                                       else {
-                                                                                                                                                                             url = `${domain}/${cleanedPath}`;
-                                                                                                                                                                                 }
-
-                                                                                                                                                                                     // Log URL and body for debugging
-                                                                                                                                                                                         console.log(`URL: ${url}`);
-                                                                                                                                                                                             console.log(`Body: ${body}`);
-
-                                                                                                                                                                                                 // Clear form and show success message
-                                                                                                                                                                                                     setDomain('');
-                                                                                                                                                                                                         setPath('');
-                                                                                                                                                                                                             setMethod('GET');
-                                                                                                                                                                                                                 setBody('');
-                                                                                                                                                                                                                     setMessage(url);
-                                                                                                                                                                                                                         }
-                                                                                                                                                                                                                           }, [domain, path, method]);
-
-                                                                                                                                                                                                                             const handleSubmit = (event) => {
-                                                                                                                                                                                                                                 event.preventDefault();
-
-                                                                                                                                                                                                                                     const target = event.target;
+        let url = "";                    
+        if (!/^w+\.[A-Za-z0-9]+\.com$/i.test(domain)) {         
+            setMessage('Invalid URL! Please recheck your URL');                              
+            return;                                      
+        }                                              
+        const cleanedPath = path.trim().replace(' ', '/');                                                     
+        if (['POST', 'PUT'].includes(method)) {                                                           
+            if((body.trim().length === 0) || (body.trim().length > 0 && (!/^\{.*"[A-Za-z]+".*:.*"[A-Za-z]+".*\}$/i.test(body)))) {                                                             
+                setMessage('Error in the Body');                                                                   
+                return;                                                                            
+            }                                                                                     
+        }                                                                                             
+        if(['GET'].includes(method) && body.trim().length > 0) {                                                                                               
+            if(!/^\{.*"[A-Za-z]+".*:.*"[A-Za-z]+".*\}$/i.test(body)) {                                                                                                 
+                setMessage('Error in the Body of the Query Params');                                                                                                       
+                return;                                                                                                                
+            }                                                                                                                         
+        }                                                                                                                                     
+        if(['GET'].includes(method) && body.trim().length > 0) {                                                                                                                                       
+            let te = body.trim().replace(/[\s\{\}\"]+/g,"");                                                                                                                                             
+            const tem = te.trim().replace(":","=");                                                                                                                                                   
+            url = `${domain}/${cleanedPath}?${tem}`;                                                                                                                                                           
+        }                                                                                                                                                               
+        else {                                                                                                                                                                 
+            url = `${domain}/${cleanedPath}`;                                                                                                                                                                         
+        }                                                                                                                                                                             
+        // Log URL and body for debugging                                                                                                                                                                                 
+        console.log(`URL: ${url}`);                                                                                                                                                                                     
+        console.log(`Body: ${body}`);                                                                                                                                                                                         
+        // Clear form and show success message                                                                                                                                                                                            
+        setDomain('');                                                                                                                                                                                                 
+        setPath('');                                                                                                                                                                                                     
+        setMethod('GET');                                                                                                                                                                                                        
+        setBody('');                                                                                                                                                                                                             
+        setMessage(url);                                                                                                                                                                                                                    
+    }                                                                                                                                                                                                                           
+}, [domain, path, method]);                                                                                                                                                                                                                             
+const handleSubmit = (event) => {                                                                                                                                                                                                                             
+    event.preventDefault();                                                                                                                                                                                                                                 
+    const target = event.target;
                                                                                                                                                                                                                                          setDomain(target[0].value);
                                                                                                                                                                                                                                              setPath(target[1].value);
                                                                                                                                                                                                                                                  setMethod(target[2].value);
