@@ -63,26 +63,22 @@ return (
         <input data-testid="path" type="text" id="path" value={path} onChange={(event) => setPath(event.target.value)} />
         <label htmlFor="method">Method:</label>
         <select data-testid="method" id="method" value={method} onChange={(event) => setMethod(event.target.value)} >
-        <option value="GET">GET</option>
-        <option value="POST">POST</option>
-                                                                                                                                                                                                                                                                                                                                                     <option value="PUT">PUT</option>
-                                                                                                                                                                                                                                                                                                                                                               <option value="DELETE">DELETE</option>
-                                                                                                                                                                                                                                                                                                                                                                       </select>
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="DELETE">DELETE</option>
+        </select>
+        {method !== "DELETE" &&
+            <React.Fragment>
+            <label htmlFor="body">Body:</label>
+            <textarea data-testid="body" id="body" value={body} onChange={(event) => setBody(event.target.value)} ></textarea>
+            </React.Fragment>
+        }
+        <button type="submit">Validate URL</button>
+        </form>
+        {message && <div data-testid="message">{message}</div>}
+    </div>
+);
+}
 
-                                                                                                                                                                                                                                                                                                                                                                               {method !== "DELETE" &&
-                                                                                                                                                                                                                                                                                                                                                                                         <React.Fragment>
-                                                                                                                                                                                                                                                                                                                                                                                                     <label htmlFor="body">Body:</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                 <textarea data-testid="body" id="body" value={body} onChange={(event) => setBody(event.target.value)} ></textarea>
-                                                                                                                                                                                                                                                                                                                                                                                                                           </React.Fragment>
-                                                                                                                                                                                                                                                                                                                                                                                                                                   }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                           <button type="submit">Validate URL</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                 </form>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                       {message && <div data-testid="message">{message}</div>}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                   );
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                   }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                   export default UrlValidator;
+export default UrlValidator;
